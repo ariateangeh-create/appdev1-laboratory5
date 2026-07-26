@@ -9,20 +9,25 @@ const products = [
 
 function ProductCard({ product, onAddToCart }) {
   return (
-    <div className="product-card">
+    <div
+      className="product-card"
+      style={{
+        border: "1px solid #ccc",
+        padding: "10px",
+        marginBottom: "12px",
+      }}
+    >
       <h3>{product.title}</h3>
+
+      {product.popular && <p>⭐ Popular</p>}
 
       <p
         style={{
-          color: product.isFruit ? "crimson" : "green",
+          color: product.isFruit ? "magenta" : "darkgreen",
         }}
       >
-        ${product.price.toFixed(2)}
+        Price: ${product.price.toFixed(2)}
       </p>
-
-      {product.popular && <span>⭐ Popular</span>}
-
-      <br />
 
       <button onClick={onAddToCart}>Add to Cart</button>
     </div>
@@ -30,17 +35,21 @@ function ProductCard({ product, onAddToCart }) {
 }
 
 export default function ShopApp() {
-  const [cartCount, setCartCount] = useState(0);
+  const [cartStatus, setCartStatus] = useState(0);
 
   function handleAddToCart() {
-    setCartCount(cartCount + 1);
+    setCartStatus(cartStatus + 1);
   }
 
   return (
     <div className="shop">
       <h1>Mini Fruit & Veg Stand</h1>
 
-      <p>🛒 Cart: {cartCount} item(s)</p>
+      <p>
+        {cartStatus === 0
+          ? "Cart is empty"
+          : `You have ${cartStatus} items in your cart`}
+      </p>
 
       <div className="product-list">
         {products.map((product) => (
